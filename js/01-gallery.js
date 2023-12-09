@@ -30,23 +30,19 @@ function imageClicking(event) {
     const instance = basicLightbox.create(
         `<img src="${originalImage}" width="800" height="600">`, {
         onShow: instance => {
-            window.addEventListener('keydown', (event) => {
-                if (event.code !== 'Escape') {
-                    return;
-                };
-                instance.close();
-            });
+            window.addEventListener('keydown', escapedKey);
         },
         onClose: instance => {
-            window.removeEventListener('keydown', (event) => {
-                if (event.code !== 'Escape') {
-                    return;
-                };
-                instance.close();
-            });
+            window.removeEventListener('keydown', escapedKey);
         },
     });
     instance.show();
+    function escapedKey(event) {
+        if (event.code !== 'Escape') {
+            return;
+        };
+        instance.close();
+    }
 };
 
 galleryList.addEventListener('click', imageClicking);
